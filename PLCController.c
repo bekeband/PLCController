@@ -7,6 +7,7 @@
 #include "PLCHardware.h"
 #include "TestOuts.h"
 
+
 void PrintPLCMemoryAreas() {
 
 	TestPrintf("PLCMemory areas shift address:\n\r");
@@ -19,7 +20,8 @@ void PrintPLCMemoryAreas() {
 	TestPrintf("PLC_MEMORY = %d , SIZE = %d\n\r", MEMORY_BYTES, sizeof(pPLCMemory->PLC_MEMORY));
 	TestPrintf("PLC_RETENT_MEMORY = %d , SIZE = %d\n\r", 
 		RETENT_MEMORY_BYTES, sizeof(pPLCMemory->PLC_RETENT_MEMORY));
-
+	TestPrintf("PLC_PRG_SIZE = %d byte.\n\r", PLC_PRG_SIZE);
+	
 }
 
 void PrintPLCMemoryTests() {
@@ -27,7 +29,7 @@ void PrintPLCMemoryTests() {
 		GET_MEMORY_BIT(PLCMemory.INPUTS_MIRROR, 10, 2));
 }
 
-void main()
+int main()
 {
 	TestPrintf("Hello PLCController\n\r");
 	TestPrintf("The PLCHardware total memory size is : %d\n\r", sizeof(s_PLCMemory));

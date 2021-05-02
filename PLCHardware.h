@@ -1,6 +1,8 @@
 #ifndef PLCHardware_h
 #define PLCHardware_h
 
+#include <stdio.h>
+#include <string.h>
 #include "PLCTypes.h"
 
 typedef struct {
@@ -38,6 +40,13 @@ struct {
 
 typedef s_PLCMemory* p_PLCMemory;
 
+typedef 
+struct {
+	unsigned char code;
+}s_PLCProgram;
+
+typedef s_PLCProgram* p_PLCProgram;
+
 /* Define the PLC memory shift of the PLC memories areas. MAX shift 65535 (unsigned short)*/
 #define START				0
 #define INPUTS_SHIFT		START
@@ -46,6 +55,8 @@ typedef s_PLCMemory* p_PLCMemory;
 #define PLC_MEMORY_SHIFT	(MARKERS_SHIFT + MARKERS_BYTES)
 #define PLC_RETENT_MEMORY_SHIFT		(PLC_MEMORY_SHIFT + MEMORY_BYTES)
 #define END					(PLC_RETENT_MEMORY_SHIFT + RETENT_MEMORY_BYTES)
+
+#define PLC_PROGRAM_NAME_MAX_LENGTH		22
 
 #define GET_MEMORY_BIT(MEMARRAY, MEMBYTE, BIT) MEMARRAY[MEMBYTE] & (1 << BIT)
 #define SET_MEMORY_BIT(MEMARRAY, MEMBYTE, BIT) MEMARRAY[MEMBYTE] |= (1 << BIT)
@@ -57,8 +68,16 @@ typedef s_PLCMemory* p_PLCMemory;
 #define GET_MEMORY_WORD(MEMARRAY, MEMBYTE) MEMARRAY[MEMBYTE]
 #define SET_MEMORY_WORD(MEMARRAY, MEMBYTE, DATA) (MEMARRAY[MEMBYTE] = DATA)
 
+#define NOP_CODE			0
+#define LOAD_BYTE			1
+#define LOAD_WORD			2
+#define LOAD_FLOAT			3
+
+#define PRG_END				100
 
 #define PLC_STACK_SIZE		64
+
+#define PLC_PRG_SIZE		20000
 
 s_PLCMemory PLCMemory;
 p_PLCMemory pPLCMemory;
@@ -69,7 +88,17 @@ struct {
 	unsigned char type;
 }s_PLCCommand;
 
+typedef
+struct {
+	char name[PLC_PROGRAM_NAME_MAX_LENGTH];
+	unsigned int startaddress;
+	unsigned int size;
+	unsigned int stack_size_req;
+}s_PLCProgram_Descriptor;
+
 void PushStack(s_PLCCommand PLCCommand);
 s_PLCCommand PopStack();
+
+int runPLCProgram();
 
 #endif
