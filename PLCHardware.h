@@ -5,7 +5,7 @@
 #include <string.h>
 #include "PLCTypes.h"
 
-typedef struct {
+typedef struct s_counter {
 	u8	value;
 }s_counter;
 
@@ -30,8 +30,7 @@ typedef struct {
 #define RETENT_MEMORY_BYTES	512
 #define RETENT_MEMORY_BITS	(8 * RETENT_MEMORY_BYTES)
 
-typedef
-struct {
+typedef struct s_PLCMemory {
 	u8 INPUTS_MIRROR[INPUTS_BYTES];
 	u8 OUTPUTS_MIRROR[OUTPUTS_BYTES];
 	u8 AD_DATAS_MIRROR[AD_DATAS_BYTES];
@@ -43,8 +42,7 @@ struct {
 
 typedef s_PLCMemory* p_PLCMemory;
 
-typedef 
-struct {
+typedef struct s_PLCProgram {
 	unsigned char code;
 }s_PLCProgram;
 
@@ -87,14 +85,12 @@ typedef s_PLCProgram* p_PLCProgram;
 s_PLCMemory PLCMemory;
 p_PLCMemory pPLCMemory;
 
-typedef
-struct {
+typedef struct s_PLCCommand {
 	void* address;
 	unsigned char type;
 }s_PLCCommand;
 
-typedef
-struct {
+typedef struct s_PLCProgram_Descriptor {
 	char name[PLC_PROGRAM_NAME_MAX_LENGTH];
 	unsigned int startaddress;
 	unsigned int size;
