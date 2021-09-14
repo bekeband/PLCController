@@ -102,4 +102,17 @@ s_PLCCommand PopStack();
 
 int runPLCProgram();
 
+#define LOAD_MASK			0b10000000
+#define STORE_MASK			0b01000000
+
+#define CONST_MASK			0b00011000
+
+#define BIT_MASK			0b00000000
+#define BYTE_MASK			0b00000001
+#define FLOAT_MASK			0b00000010
+
+#define MAIN_START_COMMAND	0b11111111
+#define END_COMMAND			0b11111110
+#define PROC_COMMAND		0b11111101
+
 #endif
